@@ -1,0 +1,74 @@
+<div class="header">
+  <table class="w100">
+    <tr>
+      <td><span class="title">DIFF</span></td>
+      <td class="right">
+        <div class="nav-container float-right">
+          <ul>
+            <li>
+              <a href="sapevent:toggle-unified">Split/Unified view</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  {{#diffs}}
+  <div class="diff" data-type="abap" data-changed-by="user1" data-file="/src/zguibp_alv.prog.abap">
+    <div class="diff-head">
+      <span class="banner ins">+ {{ins_cnt}}</span>
+      <span class="banner del">- {{del_cnt}}</span>
+      <span class="banner upd">~ {{upd_cnt}}</span>
+      <span class="file-name">{{filename}}</span>
+      <span class="state-block">
+        {{#state-l-notexist}}<span class="none" title="Local: Not exists">X</span>{{/state-l-notexist}}
+        {{#state-l-nochange}}<span class="none" title="Local: No changes">&nbsp;</span>{{/state-l-nochange}}
+        {{#state-l-modified}}<span class="changed" title="Local: Modified">M</span>{{/state-l-modified}}
+        {{#state-l-added}}<span class="added" title="Local: Added new">A</span>{{/state-l-added}}
+        {{#state-l-mixed}}<span class="mixed" title="Local: Multiple changes">&#x25A0;</span>{{/state-l-mixed}}
+        {{#state-l-deleted}}<span class="deleted" title="Local: Deleted">D</span>{{/state-l-deleted}}
+        {{#state-r-notexist}}<span class="none" title="Remote: Not exists">X</span>{{/state-r-notexist}}
+        {{#state-r-nochange}}<span class="none" title="Remote: No changes">&nbsp;</span>{{/state-r-nochange}}
+        {{#state-r-modified}}<span class="changed" title="Remote: Modified">M</span>{{/state-r-modified}}
+        {{#state-r-added}}<span class="added" title="Remote: Added new">A</span>{{/state-r-added}}
+        {{#state-r-mixed}}<span class="mixed" title="Remote: Multiple changes">&#x25A0;</span>{{/state-r-mixed}}
+        {{#state-r-deleted}}<span class="deleted" title="Remote: Deleted">D</span>{{/state-r-deleted}}
+      </span>
+      <span class="changed-by">last change by: <span class="user">{{changed_by}}</span></span>
+    </div>
+
+    <div class="diff-content syntax-hl">
+      <table>
+        <thead class="header">
+          <tr>
+            <th class="num"></th>
+            <th>LOCAL</th>
+            <th class="num"></th>
+            <th>REMOTE</th>
+          </tr>
+        </thead>
+        {{#lines}}
+        {{#beacon}}
+        <thead class="nav-line">
+          <tr>
+            <th class="num"></th>
+            <th colspan="3">{{new}}</th>
+          </tr>
+        </thead>
+        {{/beacon}}
+        {{^beacon}}
+        <tr>
+          <td class="num" line-num="{{old_num}}"></td><td class="code{{#state-upd}} upd{{/state-upd}}{{#state-del}} del{{/state-del}}">{{#state-non}}&nbsp;{{/state-non}}{{#state-upd}}~{{/state-upd}}{{#state-del}}-{{/state-del}}{{old}}</td>
+          <td class="num" line-num="{{new_num}}"></td><td class="code{{#state-upd}} upd{{/state-upd}}{{#state-ins}} ins{{/state-ins}}">{{#state-non}}&nbsp;{{/state-non}}{{#state-upd}}~{{/state-upd}}{{#state-ins}}+{{/state-ins}}{{new}}</td>
+        </tr>
+        {{/beacon}}
+        {{/lines}}
+      </table>
+    </div>
+
+  </div>
+  {{/diffs}}
+</div>

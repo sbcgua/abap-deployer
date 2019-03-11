@@ -1,0 +1,347 @@
+/* GLOBALS */
+sup {
+  vertical-align: top;
+  position: relative;
+  top: -0.5em;
+  font-size: 75%;
+}
+input,
+textarea,
+select {
+  padding: 3px 6px;
+  border: 1px solid #ddd;
+}
+input:focus,
+textarea:focus {
+  border: 1px solid #8cadd9;
+}
+/* STRUCTURE DIVS, HEADER & FOOTER */
+div.header {
+  padding: 0.5em 0.5em;
+  border-bottom: 3px double lightgrey;
+}
+div.header .title {
+  font-weight: normal;
+  font-size: 18pt;
+  color: #bbb;
+  padding-left: 0.4em;
+}
+/* DIFF */
+div.diff {
+  background-color: #f2f2f2;
+  padding: 0.7em;
+}
+div.diff-head {
+  padding: 0em 0.5em 0.7em;
+}
+div.diff-head .state-block {
+  margin-left: 0.5em;
+  font-family: Consolas, Lucida Console, Courier, monospace;
+  display: inline-block;
+  text-align: center;
+  font-size: 0;
+}
+div.diff-head .state-block span {
+  display: inline-block;
+  padding: 0px 5px;
+  border: 1px solid #000;
+  font-size: 12pt;
+}
+div.diff-head .state-block span.added {
+  background-color: #69ad74;
+  border-color: #579e64;
+  color: white;
+}
+div.diff-head .state-block span.changed {
+  background-color: #e0c150;
+  border-color: #d4af25;
+  color: white;
+}
+div.diff-head .state-block span.mixed {
+  background-color: #e0c150;
+  border-color: #579e64;
+  color: #69ad74;
+}
+div.diff-head .state-block span.deleted {
+  background-color: #c76861;
+  border-color: #b8605a;
+  color: white;
+}
+div.diff-head .state-block span.none {
+  background-color: #e8e8e8;
+  border-color: #dbdbdb;
+  color: #c8c8c8;
+}
+div.diff-head .file-name {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  color: grey;
+}
+div.diff-head .changed-by {
+  color: grey;
+  float: right;
+}
+div.diff-head .changed-by .user {
+  border-radius: 3px;
+  border: solid 1px #c2d4ea;
+  background-color: #d9e4f2;
+  padding: 1px 0.4em;
+}
+div.diff-head .banner {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+div.diff-head .banner.ins {
+  border-color: #abf2ab;
+  background-color: #e0ffe0;
+}
+div.diff-head .banner.del {
+  border-color: #ff667d;
+  background-color: #ffccd4;
+}
+div.diff-head .banner.upd {
+  border-color: #dada00;
+  background-color: #ffffcc;
+}
+div.diff-content {
+  background: #fff;
+}
+div.diff-content table {
+  font-family: Consolas, Courier, monospace;
+  font-size: 10pt;
+  width: 100%;
+  border-bottom: 1px solid #DDD;
+}
+div.diff-content td,
+div.diff-content th {
+  color: #444;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+div.diff-content td.num,
+div.diff-content th.num {
+  width: 1%;
+  min-width: 2em;
+  padding-right: 8px;
+  padding-left: 8px;
+  text-align: right !important;
+  color: #ccc;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  -ms-user-select: none;
+  user-select: none;
+}
+div.diff-content td.num::before,
+div.diff-content th.num::before {
+  content: attr(line-num);
+}
+div.diff-content tbody tr:first-child td {
+  padding-top: 0.5em;
+}
+div.diff-content tbody tr:last-child td {
+  padding-bottom: 0.5em;
+}
+div.diff-content tbody td {
+  width: 50%;
+  vertical-align: top;
+}
+div.diff-content thead th {
+  text-align: left;
+  font-weight: normal;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+div.diff-content thead.header th {
+  color: #EEE;
+  background-color: #BBB;
+  text-align: left;
+  font-weight: bold;
+  padding-left: 0.5em;
+  font-size: 9pt;
+}
+div.diff-content thead.nav-line {
+  background-color: #edf2f9;
+}
+div.diff-content thead.nav-line th {
+  color: #bbb;
+}
+div.diff-content code {
+  font-family: inherit;
+  white-space: pre;
+}
+div.diff-content .code {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: visible;
+}
+div.diff-content .ins {
+  border-color: #abf2ab;
+  background-color: #e0ffe0;
+}
+div.diff-content .del {
+  border-color: #ff667d;
+  background-color: #ffccd4;
+}
+div.diff-content .upd {
+  border-color: #dada00;
+  background-color: #ffffcc;
+}
+/* STYLES for Syntax Highlighting */
+.syntax-hl .keyword {
+  color: #0a69ce;
+}
+.syntax-hl .text {
+  color: #48ce4f;
+}
+.syntax-hl .comment {
+  color: #808080;
+  font-style: italic;
+}
+.syntax-hl .xml_tag {
+  color: #457ce3;
+}
+.syntax-hl .attr {
+  color: #b777fb;
+}
+.syntax-hl .attr_val {
+  color: #7a02f9;
+}
+/* TOOLBAR */
+/* submenues align to left or right border of the active item
+   depending on .float-right modifier */
+.nav-container {
+  /* clearfix https://css-tricks.com/snippets/css/clear-fix/ */
+  /* Minizone to extent hover area, 
+     aligned to the left or to the right of the selected item 
+     depending on .float-right modifier */
+  /* Special .corner modifier - hangs menu at the top right corner
+     and cancels 1st level background coloring */
+  /* float-right */
+}
+.nav-container:after {
+  clear: both;
+  display: block;
+  content: "";
+}
+.nav-container ul {
+  list-style: none;
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.nav-container ul a {
+  display: block;
+  text-decoration: none;
+  line-height: 30px;
+  padding: 0 12px;
+}
+.nav-container ul li {
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.nav-container ul li.current-menu-item {
+  font-weight: 700;
+}
+.nav-container ul li.block ul {
+  display: block;
+}
+.nav-container ul li:hover > ul {
+  display: block;
+}
+.nav-container ul.with-icons li {
+  text-align: left;
+  white-space: nowrap;
+}
+.nav-container ul ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  background: #fff;
+  padding: 0;
+  box-shadow: 1px 1px 3px 0px #bbb;
+}
+.nav-container ul ul li {
+  float: none;
+  min-width: 160px;
+  /* icons - text-align strictly left - otherwise look ugly
+         + bite a bit of left padding for nicer look 
+         + forbids item text wrapping (maybe can be done differently) */
+  /* Toolbar separator style */
+}
+.nav-container ul ul li:hover {
+  background-color: #f6f6f6;
+}
+.nav-container ul ul li a .octicon {
+  padding-right: 10px;
+  margin-left: -3px;
+}
+.nav-container ul ul li.separator {
+  font-size: x-small;
+  text-align: center;
+  padding: 4px 0;
+  text-transform: uppercase;
+  color: #bbb;
+  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
+}
+.nav-container ul ul li.separator:first-child {
+  border-top: none;
+}
+.nav-container ul ul li.separator:hover {
+  background-color: inherit;
+}
+.nav-container ul ul a {
+  line-height: 120%;
+  padding: 8px 15px;
+}
+.nav-container ul ul ul {
+  top: 0;
+  left: 100%;
+}
+.nav-container > ul > li > div.minizone {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  padding: 0px;
+  width: 16px;
+  height: 100%;
+  bottom: 0px;
+  left: 100%;
+}
+.nav-container > ul > li:hover div.minizone {
+  display: block;
+}
+.nav-container > ul > li:hover > a {
+  /* special selection style for 1st level items (see also .corner below) */
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.nav-container.corner {
+  position: absolute;
+  right: 0px;
+}
+.nav-container.corner > ul > li:hover > a {
+  background-color: inherit;
+}
+.nav-container.float-right ul {
+  float: right;
+}
+.nav-container.float-right ul ul {
+  left: auto;
+  right: 0;
+}
+.nav-container.float-right ul ul ul {
+  left: auto;
+  right: 100%;
+}
+.nav-container.float-right > ul > li > div.minizone {
+  left: auto;
+  right: 100%;
+}

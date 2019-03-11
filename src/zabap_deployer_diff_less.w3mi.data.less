@@ -1,0 +1,366 @@
+// run compiler or watcher:;
+//  lessc diff.less
+//  less-watch-compiler . . 
+
+/* GLOBALS */
+
+sup {
+  vertical-align: top;
+  position: relative;
+  top: -0.5em;
+  font-size: 75%;
+}
+
+input, textarea, select {
+  padding: 3px 6px;
+  border: 1px solid #ddd;
+}
+
+input:focus, textarea:focus {
+  border: 1px solid #8cadd9;
+}
+
+/* STRUCTURE DIVS, HEADER & FOOTER */
+
+div.header {
+  padding:          0.5em 0.5em;
+  border-bottom:    3px double lightgrey;
+
+  .title {
+    font-weight: normal;
+    font-size: 18pt;
+    color: #bbb;
+    padding-left: 0.4em;
+  }
+}
+
+/* DIFF */
+
+.ins-mixin() {
+  border-color: #abf2ab;
+  background-color: #e0ffe0;
+}
+.del-mixin() {
+  border-color: #ff667d;
+  background-color: #ffccd4;
+}
+.upd-mixin() {
+  border-color: #dada00;
+  background-color: #ffffcc;
+}
+
+div.diff {
+  background-color: #f2f2f2;
+  padding: 0.7em
+}
+
+div.diff-head {
+  padding: 0em 0.5em 0.7em;
+
+  .state-block {
+    margin-left: 0.5em;
+    font-family: Consolas, Lucida Console, Courier, monospace;
+    display: inline-block;
+    text-align: center;
+    font-size: 0; // to remove space between spans
+
+    span {
+      display: inline-block;
+      padding: 0px 5px;
+      border: 1px solid #000;
+      font-size: 12pt; // to remove space between spans
+
+      &.added {
+        background-color: #69ad74;
+        border-color: #579e64;
+        color: white;
+      }
+      &.changed {
+        background-color: #e0c150;
+        border-color: #d4af25;
+        color: white;
+      }
+      &.mixed {
+        background-color: #e0c150;
+        border-color: #579e64;
+        color: #69ad74;
+      }
+      &.deleted {
+        background-color: #c76861;
+        border-color: #b8605a;
+        color: white;
+      }
+      &.none {
+        background-color: #e8e8e8;
+        border-color: #dbdbdb;
+        color: #c8c8c8;
+      }
+    }
+  }
+
+  .file-name {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: grey;
+  }
+
+  .changed-by {
+    color: grey;
+    float: right;
+    
+    .user {
+      border-radius: 3px;
+      border: solid 1px #c2d4ea;
+      background-color: #d9e4f2;
+      padding: 1px 0.4em;
+    }
+  }
+
+  .banner {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    
+    &.ins { .ins-mixin(); }
+    &.del { .del-mixin(); }
+    &.upd { .upd-mixin(); }
+  }
+}
+
+
+div.diff-content {
+  background: #fff;
+
+  table {
+    font-family: Consolas, Courier, monospace;
+    font-size: 10pt;
+    width: 100%;
+    border-bottom: 1px solid #DDD;
+  }
+
+  td,th {
+    color: #444;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    &.num {
+      width: 1%;
+      min-width: 2em;
+      padding-right: 8px;
+      padding-left:  8px;
+      text-align: right !important;
+      color: #ccc;
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+      -ms-user-select: none;
+      user-select: none;
+      &::before {
+        content: attr(line-num);
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:first-child td { padding-top: 0.5em; }
+      &:last-child td  { padding-bottom: 0.5em; }
+    }
+    td {
+      width: 50%;
+      vertical-align: top
+    }
+  }
+
+  thead {
+    th {
+      text-align: left;
+      font-weight: normal;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    &.header {
+      th {
+        color: #EEE;
+        background-color: #BBB;
+        text-align: left;
+        font-weight: bold;
+        padding-left: 0.5em;
+        font-size: 9pt;
+      }
+    }
+    &.nav-line {
+      background-color: #edf2f9;
+      th {
+        color: #bbb;
+      }
+    }
+  }
+
+  code {
+    font-family: inherit;
+    white-space: pre;
+  }
+  .code {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow: visible;
+  }
+  .ins { .ins-mixin(); }
+  .del { .del-mixin(); }
+  .upd { .upd-mixin(); }  
+}
+
+/* STYLES for Syntax Highlighting */
+.syntax-hl {
+  .keyword  { color: #0a69ce; }
+  .text     { color: #48ce4f; }
+  .comment  { color: #808080; font-style: italic; }
+  .xml_tag  { color: #457ce3; }
+  .attr     { color: #b777fb; }
+  .attr_val { color: #7a02f9; }
+}
+
+/* TOOLBAR */
+// Special credits to example at https://codepen.io/philhoyt/pen/ujHzd */
+// container div, aligned left, 
+// but with .float-right modifier alignes right
+/* submenues align to left or right border of the active item
+   depending on .float-right modifier */
+
+.nav-container {
+  /* clearfix https://css-tricks.com/snippets/css/clear-fix/ */
+  &:after { clear: both; display: block; content: ""; } 
+
+  ul { // List of first level
+    list-style: none;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: block;
+      text-decoration: none;
+      line-height: 30px;
+      padding: 0 12px;
+    }
+    
+    li {
+      position: relative;
+      float: left;
+      margin: 0;
+      padding: 0;
+
+      &.current-menu-item { font-weight: 700; }
+      &.block ul { display: block; }
+      &:hover > ul { display: block; }
+    }
+
+    &.with-icons li {
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+
+  ul ul { // List of second level
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+    padding: 0;
+    box-shadow: 1px 1px 3px 0px #bbb;
+
+    li {
+      float: none;
+      min-width: 160px;
+
+      &:hover { background-color: #f6f6f6; }
+
+      /* icons - text-align strictly left - otherwise look ugly
+         + bite a bit of left padding for nicer look 
+         + forbids item text wrapping (maybe can be done differently) */
+      a .octicon {
+          padding-right: 10px;
+          margin-left: -3px;
+      }
+
+      /* Toolbar separator style */
+      &.separator {
+        font-size: x-small;
+        text-align: center;
+        padding: 4px 0;
+        text-transform: uppercase;
+        color: #bbb;
+        border-bottom: 1px solid #eee;
+        border-top: 1px solid #eee;
+        
+        &:first-child { border-top: none; }
+        &:hover { background-color: inherit; }
+      }
+    }
+
+    a {
+      line-height: 120%;
+      padding: 8px 15px;
+    }
+  }
+
+  ul ul ul { // List of third level
+    top: 0;
+    left: 100%;
+  }
+
+  /* Minizone to extent hover area, 
+     aligned to the left or to the right of the selected item 
+     depending on .float-right modifier */
+  & > ul > li { 
+    & > div.minizone {
+      display: none;
+      z-index: 1;
+      position: absolute;
+      padding: 0px;
+      width: 16px;
+      height: 100%;
+      bottom: 0px;
+      left: 100%;
+    }
+    &:hover {
+      div.minizone { display: block; }
+      & > a { 
+        /* special selection style for 1st level items (see also .corner below) */
+        background-color: rgba(255, 255, 255, 0.5); 
+      }
+    }
+  }
+
+  /* Special .corner modifier - hangs menu at the top right corner
+     and cancels 1st level background coloring */
+  &.corner {
+    position: absolute;
+    right: 0px;
+    & > ul > li:hover > a { background-color: inherit; }
+  }
+
+  /* float-right */
+  &.float-right {
+    ul { 
+      float: right; 
+      ul { 
+        left: auto; 
+        right: 0;
+        ul {
+          left: auto;
+          right: 100%;
+        }
+      }
+    }
+    & > ul > li > div.minizone {
+      left: auto;
+      right: 100%;
+    }
+  }
+}
