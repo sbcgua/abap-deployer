@@ -46,7 +46,7 @@ class lcl_app implementation.
 
   method load_repo.
     data lt_files type zif_abapgit_definitions=>ty_files_tt.
-    lt_files = zcl_abapgit_zip=>unzip_file( iv_xdata ).
+    lt_files = zcl_abapgit_zip=>load( iv_xdata ).
 
     field-symbols <f> like line of lt_files.
     read table lt_files assigning <f> with key
@@ -77,7 +77,7 @@ class lcl_app implementation.
   method run.
 
     data lv_xdata type xstring.
-    lv_xdata = zcl_abapgit_factory=>get_frontend_services( )->file_upload( mv_filepath ).
+    lv_xdata = zcl_abapgit_ui_factory=>get_frontend_services( )->file_upload( mv_filepath ).
 
     mo_repo = load_repo(
       iv_xdata   = lv_xdata
