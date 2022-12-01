@@ -6,20 +6,14 @@
    <TEXT>Abap deploer CSS uncompiled</TEXT>
    <PARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZABAP_DEPLOYER_DIFF_LESS</OBJID>
      <NAME>fileextension</NAME>
      <VALUE>.less</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZABAP_DEPLOYER_DIFF_LESS</OBJID>
      <NAME>filename</NAME>
      <VALUE>diff.less</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZABAP_DEPLOYER_DIFF_LESS</OBJID>
      <NAME>mimetype</NAME>
      <VALUE>text/css</VALUE>
     </WWWPARAMS>
